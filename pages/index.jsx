@@ -1,11 +1,12 @@
-// pages/index.js
 import React from 'react';
-import MySVGComponent from '../components/fullScreenMapComponent.jsx';
+import MainSVGMap from '../components/fullScreenMapComponent.jsx';
+import Drawer from '../components/sideBar.jsx';
 
 const Home = () => {
   return (
     <div>
-      <MySVGComponent />
+      <MainSVGMap />
+      <Drawer/>
     </div>
   );
 };
