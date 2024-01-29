@@ -1,11 +1,13 @@
 import * as React from "react";
+import {useEffect} from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Skeleton from "@mui/material/Skeleton";
 import { Global } from "@emotion/react";
 import { styled } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import Button from '@mui/material/Button';
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const drawerBleeding = 56;
 const drawerWidth = "22%";
@@ -35,8 +37,16 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export default function sideBar(props) {
+  const { content } = props;
   const { window } = props;
   const [open, setOpen] = React.useState(false);
+  const buttonRef = React.useRef(null);  // Create a ref for the button
+
+  useEffect(() => {  // Add an effect that runs when content changes
+    if (content) {
+      buttonRef.current.click();  // Simulate a click on the button
+    }
+  }, [content]);
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
@@ -57,6 +67,8 @@ export default function sideBar(props) {
           },
         }}
       />
+              <Button ref={buttonRef} onClick={toggleDrawer(true)}>Open</Button>
+
       <SwipeableDrawer
         sx={{
           width: isMobile() ? undefined : drawerWidth,
@@ -67,20 +79,19 @@ export default function sideBar(props) {
             boxSizing: isMobile() ? undefined : "border-box",
           },
         }}
-        disableBackdropTransition={true}
         variant={isMobile() ? undefined : "temporary"}
         container={container}
         anchor={isMobile() ? "bottom" : "right"}
         open={isMobile() ? open : true}
+        toggleDrawer={true}
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
         swipeAreaWidth={drawerBleeding}
         disableSwipeToOpen={false}
-        
         ModalProps={{
           keepMounted: true,
           hideBackdrop: isMobile() ? false : true,
-          }}
+        }}
       >
         <StyledBox
           sx={{
@@ -106,9 +117,14 @@ export default function sideBar(props) {
             overflow: "auto",
           }}
         >
-          <Skeleton variant="rectangular" height="100%" />
+          {content && (
+            <div>
+              <h3>{content.name}</h3>
+            </div>
+          )}
         </StyledBox>
       </SwipeableDrawer>
     </Root>
   );
+ 
 }

@@ -1,11 +1,21 @@
 import React from "react";
 import { MapInteractionCSS } from "react-map-interaction";
 
-const MainSVGMap = () => {
+const MainSVGMap = ({ onClick }) => {
+  const handleClick = (event) => {
+    const clickedElement = event.target;
+    const className = clickedElement.getAttribute('class');
+    if (className && className.includes('room1')) {
+      const name = clickedElement.getAttribute('name');
+      onClick({ name });
+    }
+  };
   return (
     <div>
       <MapInteractionCSS minScale={1} maxScale={10}>
         <svg
+        onClick={handleClick}
+        onTouchStart={handleClick}
           className="fullscreen-image"
           width="1080"
           height="1920"
@@ -30,9 +40,10 @@ const MainSVGMap = () => {
             <rect
               x="92.74"
               y="1442.7"
-              className="st0"
+              className="st0 room1"
               width="484.31"
               height="18.36"
+              name="hassan"
             />
             <rect
               x="92.74"

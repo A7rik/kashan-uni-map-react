@@ -1,12 +1,10 @@
 import React from 'react';
-import MainSVGMap from '../components/fullScreenMapComponent.jsx';
-import Drawer from '../components/sideBar.jsx';
+import MapSideBar from '../components/connectorMapSideBar';
 
 const Home = () => {
   return (
     <div>
-      <MainSVGMap />
-      <Drawer/>
+      <MapSideBar/>
     </div>
   );
 };
