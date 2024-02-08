@@ -53,7 +53,7 @@ export default function sideBar(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
   return (
-    <Root>
+    <Root >
       <Global
         styles={{
           ".MuiDrawer-root > .MuiPaper-root": {
@@ -67,7 +67,7 @@ export default function sideBar(props) {
           },
         }}
       />
-              <Button ref={buttonRef} onClick={toggleDrawer(true)}>Open</Button>
+              <Button style={{ display: 'none' }} ref={buttonRef} onClick={toggleDrawer(true)}>Open</Button>
 
       <SwipeableDrawer
         sx={{
@@ -75,7 +75,6 @@ export default function sideBar(props) {
           flexShrink: isMobile() ? undefined : 0,
           "& .MuiDrawer-paper": {
             width: isMobile() ? undefined : drawerWidth,
-
             boxSizing: isMobile() ? undefined : "border-box",
           },
         }}
@@ -91,6 +90,7 @@ export default function sideBar(props) {
         ModalProps={{
           keepMounted: true,
           hideBackdrop: isMobile() ? false : true,
+          
         }}
       >
         <StyledBox
