@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "./sideBar";
+import Sidebar from "./sideBarConnector";
 import SVGComponent from "./fullScreenMapComponent";
 
 const MapSideBar = () => {
@@ -14,18 +14,19 @@ const MapSideBar = () => {
         const data = await response.json();
         setValue(data);
       } catch (error) {
-
-        console.error('Error fetching value from Redis:', error);
+        console.error("Error fetching value from Redis:", error);
       }
     };
-    
-    if (clickedPartInfo) { // Check if clickedPartInfo is not null
+
+    if (clickedPartInfo) {
+      // Check if clickedPartInfo is not null
       fetchValueFromRedis();
     }
   }, [clickedPartInfo]);
 
   useEffect(() => {
-    if (value) { // Check if value is not null
+    if (value) {
+      // Check if value is not null
       setSidebarContent(value);
     }
   }, [value]);
@@ -36,7 +37,7 @@ const MapSideBar = () => {
 
   return (
     <div>
-      <SVGComponent onClick={handleSVGClick}  />
+      <SVGComponent onClick={handleSVGClick} />
       <Sidebar content={sidebarContent} />
     </div>
   );

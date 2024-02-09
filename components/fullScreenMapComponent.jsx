@@ -4,22 +4,20 @@ import { MapInteractionCSS } from "react-map-interaction";
 const MainSVGMap = ({ onClick }) => {
   const handleClick = (event) => {
     const clickedElement = event.target;
-    const className = clickedElement.getAttribute('class');
-    if(className &&  className.includes('room')){
-
-      const name = clickedElement.getAttribute('name');
-      const parentName = clickedElement.parentElement.getAttribute('name');
+    const className = clickedElement.getAttribute("class");
+    if (className && className.includes("room")) {
+      const name = clickedElement.getAttribute("name");
+      const parentName = clickedElement.parentElement.getAttribute("name");
       const combinedName = `${parentName}:${name}`; // Combine parentName and name with ':'
       onClick({ name: combinedName }); // Pass combinedName to the onClick function
     }
-      
   };
   return (
     <div>
       <MapInteractionCSS minScale={1} maxScale={10}>
         <svg
-        onClick={handleClick}
-        onTouchStart={handleClick}
+          onClick={handleClick}
+          onTouchStart={handleClick}
           className="fullscreen-image"
           width="1080"
           height="1920"
