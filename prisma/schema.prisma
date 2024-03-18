@@ -4,8 +4,6 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -15,40 +13,88 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Prof {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String?
-  room        Room      @relation(fields: [roomId], references: [id])
-  roomId      Int
-  schedules Schedules[]
-  
+  id         Int         @id @default(autoincrement())
+  name       String
+  email      String?
+  room       Room?        @relation(fields: [roomId], references: [id])
+  roomId     Int?
+  schedules  Schedules[]
+  ProfRoom   ProfRoom?   @relation(fields: [profRoomId], references: [id])
+  profRoomId Int?
+}
+
+model Building {
+  id    Int    @id @default(autoincrement())
+  name  String
+  floor Int
+  rooms Room[]
 }
 
 model Room {
-  id        Int      @id @default(autoincrement())
-  name      String
-  capacity  Int?
-  prof      Prof[]
-  schedules Schedules[]
+  id         Int         @id @default(autoincrement())
+  number     Int
+  floor      Int
+  type       RoomType
+  building   Building    @relation(fields: [buildingId], references: [id])
+  buildingId Int
+  Prof       Prof[]
+  ClassRoom  ClassRoom[]
+  LabRoom    LabRoom[]
+  ProfRoom   ProfRoom[]
+  WC         WC[]
+  Schedules  Schedules[]
 }
 
-model Class {
-  id          Int      @id @default(autoincrement())
+enum RoomType {
+  CLASS
+  LAB
+  PROF
+  WC
+}
+
+model ClassRoom {
+  id       Int  @id @default(autoincrement())
+  room     Room @relation(fields: [roomId], references: [id])
+  roomId   Int
+  capacity Int
+}
+
+model LabRoom {
+  id        Int      @id @default(autoincrement())
+  room      Room     @relation(fields: [roomId], references: [id])
+  roomId    Int
+  equipment String[]
+}
+
+model ProfRoom {
+  id        Int    @id @default(autoincrement())
+  room      Room   @relation(fields: [roomId], references: [id])
+  roomId    Int
+  professor Prof[]
+}
+
+model WC {
+  id     Int  @id @default(autoincrement())
+  room   Room @relation(fields: [roomId], references: [id])
+  roomId Int
+}
+
+model Course {
+  id          Int         @id @default(autoincrement())
   name        String
   description String?
   schedules   Schedules[]
 }
 
 model Schedules {
-  id          Int      @id @default(autoincrement())
-  prof     Prof  @relation(fields: [profId], references: [id])
-  profId   Int
-  class       Class     @relation(fields: [classId], references: [id])
-  classId     Int
-  room        Room      @relation(fields: [roomId], references: [id])
-  roomId      Int
-  startTime   DateTime
-  endTime     DateTime
+  id        Int      @id @default(autoincrement())
+  prof      Prof     @relation(fields: [profId], references: [id])
+  profId    Int
+  course    Course   @relation(fields: [courseId], references: [id])
+  courseId  Int
+  room      Room     @relation(fields: [roomId], references: [id])
+  roomId    Int
+  startTime DateTime
+  endTime   DateTime
 }

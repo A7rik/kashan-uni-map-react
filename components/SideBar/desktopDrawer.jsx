@@ -21,7 +21,7 @@ export default function PermanentDrawerRight(props) {
         variant="permanent"
         anchor="right"
       >
-        <SideBarContent content={content} />
+        <SideBarContent {...props} />
       </Drawer>
     </Box>
   );

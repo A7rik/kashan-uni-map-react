@@ -3,32 +3,16 @@ import React, { useState, useEffect } from "react";
 import Link from 'next/link'
 
 
-const sideBarContent = ({ content }) => {
+const sideBarContent = ({ content ,roomPage }) => {
   const [cn, setCn] = useState(content);
-  useEffect(() => {
-    setCn(content);
-  }, [content]);
-  const [value, setValue] = useState(null);
-  const [home, setHome] = useState(true);
+  const [value, setValue] = useState(content);
   const [room, setRoom] = useState(false);
+  const [home, setHome] = useState(true);
   useEffect(() => {
-    const fetchValueFromprisma = async () => {
-      try {
-        const response = await fetch(
-          `/api/DBfindMany?table=prof&culomn=roomId&id=${cn.id}`
-        );
-        const data = await response.json();
-        setValue(data);
-        setHome(false);
-        setRoom(true);
-      } catch (error) {
-        console.error("Error fetching value from prisma:", error);
-      }
-    };
-    if (cn) {
-      fetchValueFromprisma();
-    }
-  }, [cn]);
+    setRoom(roomPage);
+    setHome(!roomPage);
+  }, [value]);
+  
   return (
     <div className="drawer-container">
       {home && (
@@ -66,7 +50,7 @@ const sideBarContent = ({ content }) => {
               </Button>
             </div>
           ))}
-      </Box>
+     </Box>
     </div>
   );
 };

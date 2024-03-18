@@ -1,13 +1,16 @@
 import React from "react";
 import { MapInteractionCSS } from "react-map-interaction";
+import { useRouter } from "next/router";
 
-const MainSVGMap = ({ onClick }) => {
+const MainSVGMap = () => {
+  const router = useRouter();
+
   const handleClick = (event) => {
     const clickedElement = event.target;
     const className = clickedElement.getAttribute("class");
     if (className && className.includes("room")) {
       const room = clickedElement.getAttribute("room");
-      onClick({ id: room });
+      router.push(`/room/${room}`);
     }
   };
   return (

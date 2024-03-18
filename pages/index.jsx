@@ -1,12 +1,10 @@
 import React from 'react';
-import MapSideBar from '../components/connectorMapSideBar';
+import Connector from '../components/SideBar/sideBarConnector';
+
+
 
 const Home = () => {
-  return (
-    <div>
-      <MapSideBar/>
-    </div>
-  );
+  return;
 };
 
 export default Home;

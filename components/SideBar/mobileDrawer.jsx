@@ -109,7 +109,7 @@ function SwipeableEdgeDrawer(props) {
             results
           </Typography>
         </StyledBox>
-        <SideBarContent content={content} />
+        <SideBarContent {...props} />
       </SwipeableDrawer>
     </Root>
   );

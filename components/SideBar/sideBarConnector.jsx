@@ -2,11 +2,11 @@
 import DesktopDrawer from "./desktopDrawer";
 import MobileDrawer from "./mobileDrawer";
 
-const Connector = ({ content }) => {
+const Connector = (props) => {
   return (
     <div className="drawer-container">
-      <DesktopDrawer content={content} />
-      <MobileDrawer content={content} />
+      <DesktopDrawer {...props} />
+      <MobileDrawer {...props} />
     </div>
   );
 };
