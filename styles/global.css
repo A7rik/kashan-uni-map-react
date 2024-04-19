@@ -5,10 +5,13 @@ body {
   text-align: right;
   overflow: hidden; /*to remove scrollbar , look for another solution if needed*/
 }
-.fullscreen-image {
-  width: 100vw;
+
+ .fullscreen-image {
+  width: 80vw;
   height: 100vh;
+  
 }
+
 .rooms .st0 {
   fill: red;
 }
@@ -23,5 +26,26 @@ body {
   .desktop-drawer {
     display: none;
   }
+}
+.drawer-container .button-container {
+  display: inline;
+  left: auto;
+  right: auto;
+  padding: 0.5vw;
+}
+
+.app {
+  display: flex;
+  flex-flow:row-reverse;
+}
+
+.map-container{
+  flex: 0 0 auto;
+  width: 80vw;
+  background-color: #e7e7e7;
+}
+
+.floor-button{
+  margin: 0.5vw;
 }
 

@@ -1,23 +1,15 @@
 import { Box, Button } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import Link from 'next/link'
+import React from "react";
+import Link from "next/link";
+import SideBarProf from "./sideBarContent/prof";
+import SideBarClass from "./sideBarContent/class";
 
-
-const sideBarContent = ({ content ,roomPage }) => {
-  const [cn, setCn] = useState(content);
-  const [value, setValue] = useState(content);
-  const [room, setRoom] = useState(false);
-  const [home, setHome] = useState(true);
-  useEffect(() => {
-    setRoom(roomPage);
-    setHome(!roomPage);
-  }, [value]);
-  
+const sideBarContent = ({ content, roomType }) => {
   return (
     <div className="drawer-container">
-      {home && (
+      {!roomType && (
         <Box>
-           <Link href="/room">room</Link>
+          <Link href="/room">room</Link>
           <Button
             variant="contained"
             onClick={() => (window.location.href = "/addBuilding")}
@@ -38,19 +30,8 @@ const sideBarContent = ({ content ,roomPage }) => {
           </Button>
         </Box>
       )}
-      <Box>
-        {room &&
-          value.map((i) => (
-            <div>
-              <Button
-                variant="contained"
-                onClick={() => (setCn(i))}
-              >
-                {i.name}
-              </Button>
-            </div>
-          ))}
-     </Box>
+      <SideBarProf content={content} roomType={roomType} />
+      <SideBarClass content={content} roomType={roomType} />
     </div>
   );
 };

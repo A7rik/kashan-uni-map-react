@@ -4,59 +4,82 @@ import Connector from "../../components/SideBar/sideBarConnector";
 
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-
-export default function Home({data}) {
-  const [value, setValue] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const pathname = usePathname();
-  const [pageName, setPageName] = useState(null);
-
-  const fetchValueFromPrisma = async () => {
-    setIsLoading(true);
-    if(pageName!=undefined && pageName!=null){
-    try {
-      
-        const response = await fetch(
-          `/api/DBfindMany?table=prof&id=${pageName}&culomn=roomId`
-          );
-          //console.log(response);
-          if (!response.ok) {
-            throw new Error(`API request failed with status ${response.status}`);
-          }
-          const data1 = await response.json();
-          setValue(data1);
-          setError(null);
-        } catch (error) {
-          setError(error);
-          console.error("Error fetching value from prisma:", error);
-        } finally {
-    }
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchValueFromPrisma();
-  }, [pageName]);
-  useEffect(() => {
-    if (pathname) {
-      setPageName(pathname.split("/")[2]);
-    }
-  }, [pathname]);
-
-  if (isLoading) {
-    return;
-  }
-
-  if (error) {
-    return;
-  }
-  return <Connector content={value} roomPage={true} />;
+export default function Home({ data, roomType }) {
+  //console.log(data);
+  //console.log(roomType);
+  return <Connector content={data} roomType={roomType} />;
 }
 
+export async function getStaticPaths() {
+  // Fetch all IDs from the database
+  const data = await prisma.room.findMany();
+  const paths = data.map((item) => ({
+    params: { id: item.id.toString() },
+  }));
 
+  return {
+    paths,
+    fallback: false, // or true if you want to handle cases where the data is not available yet
+  };
+}
 
+export async function getStaticProps({ params }) {
+  const roomInfo = await prisma.room.findUnique({
+    where: {
+      id: parseInt(params.id),
+    },
+  });
+  const roomType = roomInfo.type;
+  if (roomType == "PROF") {
+    const data = await prisma.prof.findMany({
+      where: {
+        roomId: parseInt(params.id),
+      },
+    });
+    return {
+      props: {
+        data,
+        roomType,
+      },
+    };
+  } else if (roomType == "CLASS") {
+    const data = await prisma.classRoom.findMany({
+      where: {
+        roomId: parseInt(params.id),
+      },
+    });
+    return {
+      props: {
+        data,
+        roomType,
+      },
+    };
+  } else {
+    return {
+      props: {
+        error: { message: "Failed to fetch data" },
+      },
+    };
+  }
 
-
+  /* 
+  try {
+    // Fetch data based on the ID
+    const data = await prisma.prof.findMany({
+      where: {
+        roomId: parseInt(params.id)
+      }
+    });
+    return {
+      props: {
+        data
+      }
+    };
+  } catch (error) {
+    return {
+      props: {
+        error: { message: "Failed to fetch data" }
+      }
+    };
+  } */
+}

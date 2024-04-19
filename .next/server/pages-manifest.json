@@ -3,5 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/room/[id]": "pages/room/[id].js",
-  "/api/DBfindMany": "pages/api/DBfindMany.js"
+  "/": "pages/index.js",
+  "/room": "pages/room.js"
 }

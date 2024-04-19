@@ -47,15 +47,15 @@ async function main1() {
     },
   });
 }
-async function main() {
+async function main8() {
   await prisma.prof.create({
     data: {
       name: "mohammad",
-      email:"mmd@gmail.com",
+      email: "mmd@gmail.com",
       room: {
         connect: {
-          id:2
-        }
+          id: 2,
+        },
       },
       ProfRoom: {
         connect: {
@@ -95,6 +95,19 @@ async function main7() {
     },
   });
   console.log(allUsers);
+}
+
+async function main() {
+  await prisma.classRoom.create({
+    data: {
+      room: {
+        connect: {
+          id: 1,
+        },
+      },
+      capacity: 10,
+    },
+  });
 }
 
 main()
