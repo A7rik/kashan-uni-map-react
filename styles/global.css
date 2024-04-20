@@ -6,26 +6,47 @@ body {
   overflow: hidden; /*to remove scrollbar , look for another solution if needed*/
 }
 
- .fullscreen-image {
-  width: 80vw;
-  height: 100vh;
-  
-}
-
 .rooms .st0 {
   fill: red;
 }
-
+/* destop drawer */
 @media (min-width: 768px) {
   .mobile-drawer {
     display: none;
   }
+  .map-container{
+    width: 80vw;
+  }
+  
+  .fullscreen-image {
+    width: 80vw;
+    height: 100vh;
+    
+  }
+  .BoxFloorButtons{
+    right: 20vw;
+    bottom: 0;
+  }
 }
 
+/* mobile drawer */
 @media (max-width: 768px) {
   .desktop-drawer {
     display: none;
   }
+  .map-container{
+    width: 100vw;
+  }
+  
+ .fullscreen-image {
+  width: 100vw;
+  height: 95vh;
+}
+
+.BoxFloorButtons{
+  right: 0vw;
+  bottom: 60px;
+}
 }
 .drawer-container .button-container {
   display: inline;
@@ -41,7 +62,6 @@ body {
 
 .map-container{
   flex: 0 0 auto;
-  width: 80vw;
   background-color: #e7e7e7;
 }
 
@@ -49,3 +69,12 @@ body {
   margin: 0.5vw;
 }
 
+
+
+.BoxFloorButtons{
+  padding: 0.5vw;
+  position: absolute;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+}

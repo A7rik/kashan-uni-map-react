@@ -630,17 +630,7 @@ const MainSVGMap = ({ floor }) => {
         )}
       </MapInteractionCSS>
 
-      <Box
-        sx={{
-          p: "0.5vw",
-          position: "absolute",
-          right: "20vw",
-          bottom: 0,
-          display: "flex",
-          flexDirection: "column-reverse",
-          alignItems: "flex-end",
-        }}
-      >
+      <Box className="BoxFloorButtons">
         <Button
           variant="contained"
           color="primary"
@@ -665,7 +655,6 @@ const MainSVGMap = ({ floor }) => {
         >
           3
         </Button>
-       
       </Box>
     </div>
   );
