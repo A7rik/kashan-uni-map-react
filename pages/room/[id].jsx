@@ -1,13 +1,13 @@
 import { usePathname } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import Connector from "../../components/SideBar/sideBarConnector";
+import useStore from "../../store/store";
 
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 export default function Home({ data, roomType }) {
-  //console.log(data);
-  //console.log(roomType);
-  return <Connector content={data} roomType={roomType} />;
+  const setRoomTypeAndData = useStore((state )=> state.setRoomTypeAndData);
+  setRoomTypeAndData(roomType,data);
 }
 
 export async function getStaticPaths() {

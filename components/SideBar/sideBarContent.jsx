@@ -1,10 +1,11 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, stepButtonClasses } from "@mui/material";
 import React from "react";
 import Link from "next/link";
 import SideBarProf from "./sideBarContent/prof";
 import SideBarClass from "./sideBarContent/class";
+import useStore from "../../store/store";
 
-const sideBarContent = ({ content, roomType }) => {
+const sideBarContent = ({ content, roomType}) => {
   return (
     <div className="drawer-container">
       {!roomType && (

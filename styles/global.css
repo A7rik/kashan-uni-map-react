@@ -1,3 +1,4 @@
+
 body {
   margin: 0;
   padding: 0;
@@ -14,18 +15,23 @@ body {
   .mobile-drawer {
     display: none;
   }
-  .map-container{
+  .map-container {
     width: 80vw;
   }
-  
+
   .fullscreen-image {
     width: 80vw;
     height: 100vh;
-    
   }
-  .BoxFloorButtons{
+  .BoxFloorButtons {
     right: 20vw;
     bottom: 0;
+  }
+  .Box-desktop-search-box {
+    right: 20vw;
+    top: 0;
+    position: absolute;
+    margin: 1vw;
   }
 }
 
@@ -34,19 +40,22 @@ body {
   .desktop-drawer {
     display: none;
   }
-  .map-container{
+  
+  .map-container {
     width: 100vw;
   }
-  
- .fullscreen-image {
-  width: 100vw;
-  height: 95vh;
-}
 
-.BoxFloorButtons{
-  right: 0vw;
-  bottom: 60px;
-}
+  .fullscreen-image {
+    width: 100vw;
+    height: 95vh;
+  }
+
+  .BoxFloorButtons {
+    right: 0vw;
+  }
+  .Box-desktop-search-box{
+    display: none;
+  }
 }
 .drawer-container .button-container {
   display: inline;
@@ -57,24 +66,25 @@ body {
 
 .app {
   display: flex;
-  flex-flow:row-reverse;
+  flex-flow: row-reverse;
 }
 
-.map-container{
+.map-container {
   flex: 0 0 auto;
   background-color: #e7e7e7;
 }
 
-.floor-button{
+.floor-button {
   margin: 0.5vw;
 }
 
-
-
-.BoxFloorButtons{
+.BoxFloorButtons {
   padding: 0.5vw;
   position: absolute;
   display: flex;
   flex-direction: column-reverse;
   align-items: flex-end;
 }
+/* .css-aw8ruk-MuiTypography-root{
+  margin: 48px;
+} */

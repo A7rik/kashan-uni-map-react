@@ -2,10 +2,10 @@ import React from "react";
 import { MapInteractionCSS } from "react-map-interaction";
 import { useRouter } from "next/router";
 import { Box, Button } from "@mui/material";
-
-const MainSVGMap = ({ floor }) => {
+import useStore from "../../store/store";
+const MainSVGMap = () => {
+  const Floor = useStore((state) => state.mapFloor);
   const router = useRouter();
-  const [currentFloor, setCurrentFloor] = React.useState(floor);
 
   const handleClick = (event) => {
     const clickedElement = event.target;
@@ -18,7 +18,7 @@ const MainSVGMap = ({ floor }) => {
   return (
     <div className="map-container">
       <MapInteractionCSS minScale={1} maxScale={10} className="map">
-        {currentFloor === 1 && (
+        {Floor === 1 && (
           <svg
             onClick={handleClick}
             onTouchStart={handleClick}
@@ -323,7 +323,7 @@ const MainSVGMap = ({ floor }) => {
             </g>
           </svg>
         )}
-        {currentFloor === 2 && (
+        {Floor === 2 && (
           <svg
             onClick={handleClick}
             onTouchStart={handleClick}
@@ -630,32 +630,6 @@ const MainSVGMap = ({ floor }) => {
         )}
       </MapInteractionCSS>
 
-      <Box className="BoxFloorButtons">
-        <Button
-          variant="contained"
-          color="primary"
-          className={`floor-button`}
-          onClick={() => setCurrentFloor(1)}
-        >
-          1
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          className={`floor-button`}
-          onClick={() => setCurrentFloor(2)}
-        >
-          2
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          className={`floor-button`}
-          onClick={() => setCurrentFloor(3)}
-        >
-          3
-        </Button>
-      </Box>
     </div>
   );
 };

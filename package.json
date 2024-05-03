@@ -11,7 +11,8 @@
     "next": "^14.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-map-interaction": "^2.1.0"
+    "react-map-interaction": "^2.1.0",
+    "zustand": "^4.5.2"
   },
   "name": "kashan-uni-map-react",
   "version": "1.0.0",

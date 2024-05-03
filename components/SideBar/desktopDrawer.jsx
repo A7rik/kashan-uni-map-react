@@ -5,7 +5,6 @@ import SideBarContent from "./sideBarContent";
 
 const drawerWidth = 20;
 export default function PermanentDrawerRight(props) {
-  const { content } = props;
   return (
     <Box sx={{ display: "flex", }} className="desktop-drawer">
       <Drawer
