@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 async function main1() {
   // ... you will write your Prisma Client queries here
   const allUsers = await prisma.user.findMany();
-  console.log(allUsers);
 }
 
 async function main2() {
@@ -28,12 +27,10 @@ async function main3() {
     where: { id: 1 },
     data: { published: true },
   });
-  console.log(post);
 }
 
 async function main4(DB) {
   const allUsers = await prisma.DB.findMany();
-  console.log(allUsers);
 }
 
 async function main1() {
@@ -94,7 +91,6 @@ async function main7() {
       roomId: 1,
     },
   });
-  console.log(allUsers);
 }
 
 async function main() {

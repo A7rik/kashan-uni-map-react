@@ -1,10 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
   margin: 0;
   padding: 0;
   direction: rtl;
   text-align: right;
-  overflow: hidden; /*to remove scrollbar , look for another solution if needed*/
+  overflow: hidden;
 }
 
 .rooms .st0 {
@@ -12,9 +15,6 @@ body {
 }
 /* destop drawer */
 @media (min-width: 768px) {
-  .mobile-drawer {
-    display: none;
-  }
   .map-container {
     width: 80vw;
   }
@@ -27,11 +27,18 @@ body {
     right: 20vw;
     bottom: 0;
   }
-  .Box-desktop-search-box {
+  .search-box {
     right: 20vw;
     top: 0;
     position: absolute;
     margin: 1vw;
+  }
+  .navbar {
+    position: absolute;
+    width: 19.9vw;
+    bottom: 0;
+    right: 0;
+    z-index: 1300;
   }
 }
 
@@ -40,7 +47,7 @@ body {
   .desktop-drawer {
     display: none;
   }
-  
+
   .map-container {
     width: 100vw;
   }
@@ -52,9 +59,22 @@ body {
 
   .BoxFloorButtons {
     right: 0vw;
+    bottom: 60px;
   }
-  .Box-desktop-search-box{
-    display: none;
+  .search-box {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 10px;
+  }
+  .navbar {
+    position: absolute;
+    width: 100vw;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 1300;
   }
 }
 .drawer-container .button-container {
@@ -88,3 +108,23 @@ body {
 /* .css-aw8ruk-MuiTypography-root{
   margin: 48px;
 } */
+
+.puller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  cursor: grab;
+}
+
+.puller-icon {
+  width: 30px;
+  height: 4px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+}
+
+
+.navbar {
+  pointer-events: auto;
+}
