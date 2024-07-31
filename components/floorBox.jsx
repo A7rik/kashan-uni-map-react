@@ -1,9 +1,27 @@
 import { Box, Button } from "@mui/material";
 import useStore from "../store/store";
+import { useRef, useEffect } from "react";
 export default function floorBox(props) {
   const setFloor = useStore((state) => state.setFloor);
+
+  const BoxFloorButtonsRef = useRef(null);
+
+  useEffect(() => {
+    const BoxFloorButtons = BoxFloorButtonsRef.current;
+
+    if (BoxFloorButtons) {
+      const bottomOffset =
+        window.innerHeight - BoxFloorButtons.getBoundingClientRect().bottom;
+      const topOffset =
+        window.innerHeight - BoxFloorButtons.offsetHeight - bottomOffset;
+      BoxFloorButtons.style.bottom = "auto";
+      BoxFloorButtons.style.top = `${topOffset}px`;
+    }
+  }, []);
+
   return (
     <Box
+      ref={BoxFloorButtonsRef}
       className="BoxFloorButtons"
       sx={{
         position: "absolute",

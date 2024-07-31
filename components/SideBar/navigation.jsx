@@ -1,17 +1,20 @@
-// import * as React from 'react';
-// import Box from '@mui/material/Box';
-// import CssBaseline from '@mui/material/CssBaseline';
-// import BottomNavigation from '@mui/material/BottomNavigation';
-// import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-// import RestoreIcon from '@mui/icons-material/Restore';
-// import FavoriteIcon from '@mui/icons-material/Favorite';
-// import ArchiveIcon from '@mui/icons-material/Archive';
-// import Paper from '@mui/material/Paper';
-// import List from '@mui/material/List';
-// import ListItemButton from '@mui/material/ListItemButton';
-// import ListItemAvatar from '@mui/material/ListItemAvatar';
-// import ListItemText from '@mui/material/ListItemText';
-// import Avatar from '@mui/material/Avatar';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import Person2Icon from "@mui/icons-material/Person2";
+import NewspaperIcon from "@mui/icons-material/Newspaper";
+import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
+import ForumIcon from "@mui/icons-material/Forum";
+import Paper from "@mui/material/Paper";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemText from "@mui/material/ListItemText";
+import Avatar from "@mui/material/Avatar";
+import { useRef } from "react";
 
 // function refreshMessages() {
 //   const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
@@ -103,91 +106,68 @@
 //   },
 // ];
 
-import * as React from "react";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import RestoreIcon from "@mui/icons-material/Restore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ArchiveIcon from "@mui/icons-material/Archive";
-import Paper from "@mui/material/Paper";
+// import * as React from "react";
+// import BottomNavigation from "@mui/material/BottomNavigation";
+// import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+// import RestoreIcon from "@mui/icons-material/Restore";
+// import FavoriteIcon from "@mui/icons-material/Favorite";
+// import ArchiveIcon from "@mui/icons-material/Archive";
+// import Paper from "@mui/material/Paper";
 import useStore from "../../store/store";
 import { useEffect } from "react";
 
-function refreshMessages() {
-  const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
-
-  return Array.from(new Array(50)).map(
-    () => messageExamples[getRandomInt(messageExamples.length)]
-  );
-}
-
 export default function FixedBottomNavigation() {
+  /////////////////////////////////////////////////// to position it from top
+  const navbarRef = useRef(null);
+
+  useEffect(() => {
+    const navbar = navbarRef.current;
+
+    if (navbar) {
+      const bottomOffset =
+        window.innerHeight - navbar.getBoundingClientRect().bottom;
+      const topOffset = window.innerHeight - navbar.offsetHeight - bottomOffset;
+      navbar.style.bottom = "auto";
+      navbar.style.top = `${topOffset}px`;
+    }
+  }, []);
+  ///////////////////////////////////////////////////
+
   const [value, setValue] = React.useState(0);
-  const setOpenDrawer = useStore((state) => state.setOpenDrawer);
+  const setDrawer = useStore((state) => state.setDrawer);
+  const drawer = useStore((state) => state.drawer);
+  const setNavValue = useStore((state) => state.setNavValue);
+
+
 
   return (
-    <div className="navbar">
-      <Paper elevation={3}>
-        <BottomNavigation
-          showLabels
-          value={value}
-          onChange={(event, newValue) => {
-            if(newValue == 0){
-              setOpenDrawer(true)
-            }
-            setValue(newValue);
-          }}
-        >
-          <BottomNavigationAction label="Drawer" icon={<ArchiveIcon />} />
-          <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-          <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-        </BottomNavigation>
-      </Paper>
+    <div ref={navbarRef} className="navbar">
+      <Box>
+        <Paper elevation={2}>
+          <BottomNavigation
+            showLabels
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+              if (newValue != value) {
+                setTimeout(() => {
+                  setNavValue(newValue);
+                  setDrawer(true);
+                }, 400);
+              } else {
+                if (drawer == false) {
+                  setDrawer(true);
+                }
+              }
+            }}
+          >
+            <BottomNavigationAction label="Home" icon={<HomeRoundedIcon />} />
+            <BottomNavigationAction label="news" icon={<NewspaperIcon />} />
+            <BottomNavigationAction label="community" icon={<ForumIcon />} />
+            <BottomNavigationAction label="Profile" icon={<Person2Icon />} />
+          </BottomNavigation>
+        </Paper>
+      </Box>
     </div>
   );
 }
-
-const messageExamples = [
-  {
-    primary: "Brunch this week?",
-    secondary:
-      "I'll be in the neighbourhood this week. Let's grab a bite to eat",
-    person: "/static/images/avatar/5.jpg",
-  },
-  {
-    primary: "Birthday Gift",
-    secondary: `Do you have a suggestion for a good present for John on his work
-      anniversary. I am really confused & would love your thoughts on it.`,
-    person: "/static/images/avatar/1.jpg",
-  },
-  {
-    primary: "Recipe to try",
-    secondary:
-      "I am try out this new BBQ recipe, I think this might be amazing",
-    person: "/static/images/avatar/2.jpg",
-  },
-  {
-    primary: "Yes!",
-    secondary: "I have the tickets to the ReactConf for this year.",
-    person: "/static/images/avatar/3.jpg",
-  },
-  {
-    primary: "Doctor's Appointment",
-    secondary:
-      "My appointment for the doctor was rescheduled for next Saturday.",
-    person: "/static/images/avatar/4.jpg",
-  },
-  {
-    primary: "Discussion",
-    secondary: `Menus that are generated by the bottom app bar (such as a bottom
-      navigation drawer or overflow menu) open as bottom sheets at a higher elevation
-      than the bar.`,
-    person: "/static/images/avatar/5.jpg",
-  },
-  {
-    primary: "Summer BBQ",
-    secondary: `Who wants to have a cookout this weekend? I just got some furniture
-      for my backyard and would love to fire up the grill.`,
-    person: "/static/images/avatar/1.jpg",
-  },
-];

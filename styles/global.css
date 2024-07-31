@@ -60,6 +60,7 @@ body {
   .BoxFloorButtons {
     right: 0vw;
     bottom: 60px;
+    /* top: calc(100vh - 15.5em); */
   }
   .search-box {
     position: absolute;
@@ -71,7 +72,8 @@ body {
   .navbar {
     position: absolute;
     width: 100vw;
-    bottom: 0;
+    bottom:0;
+    /* top: calc(100vh - 7em); */
     right: 0;
     left: 0;
     z-index: 1300;

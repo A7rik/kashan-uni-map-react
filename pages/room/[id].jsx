@@ -1,17 +1,16 @@
-import { usePathname } from "next/navigation";
-import React, { useState, useEffect } from "react";
-import Connector from "../../components/SideBar/sideBarConnector";
 import useStore from "../../store/store";
+import { useEffect } from "react";
 
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 export default function Home({ data, roomType }) {
-  const setRoomTypeAndData = useStore((state )=> state.setRoomTypeAndData);
-  setRoomTypeAndData(roomType,data);
+  const setRoomTypeAndData = useStore((state) => state.setRoomTypeAndData);
+  const setDrawer = useStore((state) => state.setDrawer);
+  setRoomTypeAndData(roomType, data);
+  setDrawer(true);
 }
 
 export async function getStaticPaths() {
-  // Fetch all IDs from the database
   const data = await prisma.room.findMany();
   const paths = data.map((item) => ({
     params: { id: item.id.toString() },
@@ -19,7 +18,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false, // or true if you want to handle cases where the data is not available yet
+    fallback: false,
   };
 }
 

@@ -2,7 +2,6 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import SideBarContent from "./sideBarContent";
-import TextField from "@mui/material/TextField";
 
 const drawerWidth = 20;
 export default function PermanentDrawerRight(props) {
