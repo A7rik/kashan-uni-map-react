@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --desktopDrawerWidth: 22vw;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -13,29 +17,38 @@ body {
 .rooms .st0 {
   fill: red;
 }
-/* destop drawer */
+/* desktop drawer */
 @media (min-width: 768px) {
+  .desktop-drawer {
+    width: var(--desktopDrawerWidth);
+    flex-shrink: 0;
+  }
+
+  .desktop-drawer .MuiDrawer-paper {
+    width: var(--desktopDrawerWidth);
+    box-sizing: border-box;
+  }
   .map-container {
-    width: 80vw;
+    width: calc(100vw - var(--desktopDrawerWidth));
   }
 
   .fullscreen-image {
-    width: 80vw;
+    width: calc(100vw - var(--desktopDrawerWidth));
     height: 100vh;
   }
   .BoxFloorButtons {
-    right: 20vw;
+    right: var(--desktopDrawerWidth);
     bottom: 0;
   }
   .search-box {
-    right: 20vw;
+    right: var(--desktopDrawerWidth);
     top: 0;
     position: absolute;
     margin: 1vw;
   }
   .navbar {
     position: absolute;
-    width: 19.9vw;
+    width: calc(var(--desktopDrawerWidth) - 0.05vw);
     bottom: 0;
     right: 0;
     z-index: 1300;
@@ -72,7 +85,7 @@ body {
   .navbar {
     position: absolute;
     width: 100vw;
-    bottom:0;
+    bottom: 0;
     /* top: calc(100vh - 7em); */
     right: 0;
     left: 0;
@@ -125,7 +138,6 @@ body {
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 2px;
 }
-
 
 .navbar {
   pointer-events: auto;

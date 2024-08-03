@@ -1,17 +1,30 @@
 import { Box, Button } from "@mui/material";
 import * as React from "react";
+import { useState } from "react";
 import Link from "next/link";
 import SideBarProf from "./sideBarContent/prof";
 import SideBarClass from "./sideBarContent/class";
 import useStore from "../../store/store";
 import CssBaseline from "@mui/material/CssBaseline";
 import List from "@mui/material/List";
+import ListItem from "@mui/material";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import Avatar from "@mui/material/Avatar";
+import { Container, Tabs, Tab, Typography } from "@mui/material";
+import TextField from "@mui/material";
+import EditInfo from "./sideBarContent/Profile tabs/EditInfo";
+import Comments from "./sideBarContent/Profile tabs/Comments";
+import Collaborate from "./sideBarContent/Profile tabs/Collaborate";
 
 const sideBarContent = ({ content, roomType }) => {
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
+
   const navValue = useStore((state) => state.navValue);
 
   const ref = React.useRef(null);
@@ -66,10 +79,35 @@ const sideBarContent = ({ content, roomType }) => {
             ))}
           </List>
         </Box>
-        
       )}
       {navValue == 2 && <div>2</div>}
-      {navValue == 3 && <div>3</div>}
+      {navValue == 3 && (
+        <Container>
+          <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
+            <Avatar
+              alt="Profile Picture"
+              src="/profile-pic.jpg"
+              sx={{ width: 100, height: 100 }}
+            />
+            <Typography variant="h4" mt={2}>
+              Your Name
+            </Typography>
+            <Tabs
+              value={selectedTab}
+              onChange={handleTabChange}
+              aria-label="profile tabs"
+              sx={{ mt: 4 }}
+            >
+              <Tab label="Edit Info" />
+              <Tab label="Comments" />
+              <Tab label="Collaborate" />
+            </Tabs>
+            {selectedTab === 0 && <EditInfo />}
+            {selectedTab === 1 && <Comments />}
+            {selectedTab === 2 && <Collaborate />}
+          </Box>
+        </Container>
+      )}
     </div>
   );
 };

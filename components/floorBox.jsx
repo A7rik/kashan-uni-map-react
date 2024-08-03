@@ -44,14 +44,14 @@ export default function floorBox(props) {
       >
         2
       </Button>
-      <Button
+      {/* <Button
         variant="contained"
         color="primary"
         className={`floor-button`}
         onClick={() => setFloor(3)}
       >
         3
-      </Button>
+      </Button> */}
     </Box>
   );
 }
