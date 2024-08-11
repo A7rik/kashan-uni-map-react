@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Drawer } from "vaul";
-import SideBarContent from "./sideBarContent";
+import SideBarContent from "./sideBarContent/sideBarContent";
 import { useState, useEffect } from "react";
 import { clsx } from "clsx";
 import Button from "@mui/material/Button";

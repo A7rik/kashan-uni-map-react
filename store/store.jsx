@@ -2,6 +2,8 @@ import { create } from "zustand";
 
 const useStore = create((set) => ({
   navValue: 0,
+  roomId: 1,
+  userID: 0,
   homeContent: null,
   newsContent: null,
   communityContent: null,
@@ -11,8 +13,17 @@ const useStore = create((set) => ({
   mapFloor: 1,
   isMobile: false,
   drawer: false,
+  isLoggedIn: false,
+  profile: null,
+  stack: [],
+  push: (component) => set((state) => ({ stack: [...state.stack, component] })),
+  pop: () => set((state) => ({ stack: state.stack.slice(0, -1) })),
   setRoomTypeAndData: (newRoomType, newRoomData) =>
-    set({ roomType: newRoomType, roomData: newRoomData}),
+    set({
+      roomType: newRoomType,
+      roomData: newRoomData,
+      roomId: newRoomData[0].roomId,
+    }),
   setFloor: (newFloor) => set({ mapFloor: newFloor }),
   setIsMobile: (newIsMobile) => set({ isMobile: newIsMobile }),
   setNavValue: (newNavValue) => set({ navValue: newNavValue }),
@@ -21,6 +32,9 @@ const useStore = create((set) => ({
   setCommunityContent: (newContent) => set({ communityContent: newContent }),
   setProfileContent: (newContent) => set({ profileContent: newContent }),
   setDrawer: (newDrawer) => set({ drawer: newDrawer }),
+  setIsLoggedIn: (newIsLoggedIn) => set({ isLoggedIn: newIsLoggedIn }),
+  setProfile: (newProfile) => set({ profile: newProfile }),
+  setUserID: (newUserID) => set((state) => ({ ...state, userID: newUserID })),
+  // setUserID: (newUserID) => set({ userID: newUserID }),
 }));
-
 export default useStore;

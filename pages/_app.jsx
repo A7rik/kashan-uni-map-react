@@ -5,13 +5,40 @@ import Nav from "../components/SideBar/navigation";
 import SearchBox from "../components/searchBox";
 import FloorBox from "../components/floorBox";
 import useStore from "../store/store";
-import { useEffect } from "react";
-import { useRef } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function MyApp({ Component, pageProps }) {
   const setIsMobile = useStore((state) => state.setIsMobile);
 
-  
+  ///////////////////////////////////////////////////
+  //check if there logged in
+  const setProfile = useStore((state) => state.setProfile);
+  const setIsLoggedIn = useStore((state) => state.setIsLoggedIn);
+  const isLoggedIn = useStore((state) => state.isLoggedIn);
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setIsLoggedIn(false);
+        return;
+      }
+
+      try {
+        const res = await axios.get("/api/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setProfile(res.data);
+        setIsLoggedIn(true);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+        setIsLoggedIn(false);
+      }
+    };
+
+    fetchProfile();
+  }, [isLoggedIn]);
+  ///////////////////////////////////////////////////
 
   useEffect(() => {
     const handleResize = () => {

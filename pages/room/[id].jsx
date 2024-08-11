@@ -1,19 +1,29 @@
-import useStore from "../../store/store";
 import { useEffect } from "react";
+import useStore from "../../store/store";
+import prisma from "../../lib/prisma";
 
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
-export default function Home({ data, roomType }) {
+export default function Room({ data, roomType, error }) {
   const setRoomTypeAndData = useStore((state) => state.setRoomTypeAndData);
   const setDrawer = useStore((state) => state.setDrawer);
-  setRoomTypeAndData(roomType, data);
-  setDrawer(true);
+  useEffect(() => {
+    if (data && roomType) {
+      setRoomTypeAndData(roomType, data);
+      setDrawer(true);
+    }
+    
+  }, [data, roomType, setRoomTypeAndData, setDrawer]);
+
+  if (error) {
+    return <div>{error.message}</div>;
+  }
+
+  return <div>Loading...</div>;
 }
 
 export async function getStaticPaths() {
-  const data = await prisma.room.findMany();
-  const paths = data.map((item) => ({
-    params: { id: item.id.toString() },
+  const rooms = await prisma.room.findMany();
+  const paths = rooms.map((room) => ({
+    params: { id: room.id.toString() },
   }));
 
   return {
@@ -25,60 +35,35 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const roomInfo = await prisma.room.findUnique({
     where: {
-      id: parseInt(params.id),
+      id: parseInt(params.id, 10),
     },
   });
-  const roomType = roomInfo.type;
-  if (roomType == "PROF") {
-    const data = await prisma.prof.findMany({
-      where: {
-        roomId: parseInt(params.id),
-      },
-    });
+
+  if (!roomInfo) {
     return {
-      props: {
-        data,
-        roomType,
-      },
-    };
-  } else if (roomType == "CLASS") {
-    const data = await prisma.classRoom.findMany({
-      where: {
-        roomId: parseInt(params.id),
-      },
-    });
-    return {
-      props: {
-        data,
-        roomType,
-      },
-    };
-  } else {
-    return {
-      props: {
-        error: { message: "Failed to fetch data" },
-      },
+      notFound: true,
     };
   }
 
-  /* 
-  try {
-    // Fetch data based on the ID
-    const data = await prisma.prof.findMany({
+  let data = [];
+  if (roomInfo.type === "PROF") {
+    data = await prisma.prof.findMany({
       where: {
-        roomId: parseInt(params.id)
-      }
+        roomId: parseInt(params.id, 10),
+      },
     });
-    return {
-      props: {
-        data
-      }
-    };
-  } catch (error) {
-    return {
-      props: {
-        error: { message: "Failed to fetch data" }
-      }
-    };
-  } */
+  } else if (roomInfo.type === "CLASS") {
+    data = await prisma.classRoom.findMany({
+      where: {
+        roomId: parseInt(params.id, 10),
+      },
+    });
+  }
+
+  return {
+    props: {
+      data,
+      roomType: roomInfo.type,
+    },
+  };
 }

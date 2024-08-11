@@ -1,7 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import SideBarContent from "./sideBarContent";
+import SideBarContent from "./sideBarContent/sideBarContent";
 
 export default function PermanentDrawerRight(props) {
   return (

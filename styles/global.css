@@ -92,6 +92,9 @@ body {
     z-index: 1300;
   }
 }
+.drawer-container{
+  margin-bottom: 80px;
+}
 .drawer-container .button-container {
   display: inline;
   left: auto;

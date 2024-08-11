@@ -3,7 +3,6 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 async function main1() {
-  // ... you will write your Prisma Client queries here
   const allUsers = await prisma.user.findMany();
 }
 
